@@ -2,16 +2,16 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('OBI') {
             steps {
-                sh 'rm -rf robot.jar'
-                sh 'ln -snf ../ontodev_robot_master/bin/robot.jar robot.jar'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                sh 'java -jar robot.jar help'
+                try {
+                    sh 'git clone https://github.com/obi-ontology/obi.git'
+                    sh 'mkdir -p obi/build'
+                    sh 'ln -snf ../ontodev_robot_master/bin/robot.jar obi/build/robot.jar'
+                    sh 'cd obi && make test'
+                } finally {
+                    sh 'rm -rf obi'
+                }
             }
         }
     }
