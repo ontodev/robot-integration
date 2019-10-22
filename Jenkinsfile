@@ -4,14 +4,13 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'rm -rf obi'
-                sh 'ls ..'
+                sh 'cp ../ontodev_robot_master/bin/robot.jar robot.jar'
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Hello!'
+                sh 'java -jar robot.jar help'
             }
         }
     }
